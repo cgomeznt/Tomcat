@@ -29,7 +29,7 @@ Si queremos documentacion.::
 
 Vamos hacer un pequeño cambio a las opciones de Java del Tomcat utiliza para iniciar. abrimos la configuracion del tomcat.::
 
-	# vi vi /usr/share/tomcat6/conf/tomcat6.conf
+	# vi /usr/share/tomcat6/conf/tomcat6.conf
 
 Agregamos la linea de JAVA_OPTS y le colocamos Xmx y MaxPermSize, estos valores configuran como la metoria de tomcat sera utilizada.::
 
@@ -50,7 +50,7 @@ Para utilizar el manager webapp instalado en pasos previos, necesitamos agregar 
 	  <user name="admin" password="admin" roles="manager,admin" />-->
 	</tomcat-users>
 
-Se debe agregar usuarios qeu puedan administrar manager-gui y admin-gui (recuerda colocar el usuario y password)
+Se debe agregar usuarios que puedan administrar manager-gui y admin-gui (recuerda colocar el usuario y password)
 
 Reiniciamos.::
 
