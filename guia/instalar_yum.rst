@@ -80,5 +80,5 @@ Hay un .war de ejemplo en este repositorio llamado sample.war.::
 
 Y probamos el aplicativo, http://localhost:8080/sample
 
-.. figure:: ../images/img03.png
+.. figure:: ../images/img04.png
 
