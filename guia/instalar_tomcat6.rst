@@ -22,7 +22,7 @@ Instalamos JAVA.::
 
 	# rpm -ivh jdk-8u101-linux-x64.rpm
 
-Configuramos el update-alternative para java
+Configuramos el update-alternative para java.::
 
 	# update-alternatives --config java
 
@@ -32,7 +32,7 @@ Configuramos el update-alternative para java
 	-----------------------------------------------
 	*+ 1           /usr/java/jdk1.8.0_101/jre/bin/java
 
-Configuramos la variable JAVA_HOME para los perfiles de los usuarios.
+Configuramos la variable JAVA_HOME para los perfiles de los usuarios.::
 
 	# vi /etc/profile
 
@@ -40,7 +40,7 @@ Configuramos la variable JAVA_HOME para los perfiles de los usuarios.
 	export PATH=$PATH:$JAVA_HOME/jre/bin
 
 
-Verificamos el java
+Verificamos el java.::
 
 	# java -version
 	java version "1.8.0_101"
@@ -48,9 +48,9 @@ Verificamos el java
 	Java HotSpot(TM) 64-Bit Server VM (build 25.101-b13, mixed mode)
 
 Continuamos con la configuracion de Tomcat.
-++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++
 
-Revisamos el contenido de la carpeta tomcat:
+Revisamos el contenido de la carpeta tomcat::
 
 	# ls -l
 	total 124
