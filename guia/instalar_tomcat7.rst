@@ -1,4 +1,4 @@
-Instalar Tomcat CentOS desde tomcat.apache.org
+Instalar Tomcat 7 CentOS desde tomcat.apache.org
 ===============================================
 
 Descargamos el Apache tomcat desde su propia pagina https://tomcat.apache.org
