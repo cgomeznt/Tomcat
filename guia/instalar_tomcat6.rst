@@ -153,7 +153,7 @@ Ponemos en otra ventana un tail del log para ver todos los eventos.::
 
 Otra forma de iniciar::
 
-	# /opt/apache-tomcat-6.0.45/bin//startup.sh
+	# /opt/apache-tomcat-6.0.45/bin/startup.sh
 	Using CATALINA_BASE:   /opt/apache-tomcat-6.0.45
 	Using CATALINA_HOME:   /opt/apache-tomcat-6.0.45
 	Using CATALINA_TMPDIR: /opt/apache-tomcat-6.0.45/temp
@@ -174,7 +174,7 @@ Verificamos.::
 
 
 
-Detenemos el servicio .::
+Como detener el servicio .::
 
 	# /opt/apache-tomcat-6.0.45/bin/catalina.sh stop
 	Using CATALINA_BASE:   /opt/apache-tomcat-6.0.45
@@ -189,7 +189,7 @@ Recuerda el Delay, demora. Cargamos la pagina http://localhost:8088
 
 .. figure:: ../images/6/img01.png
 
-Probamos el tomcat en http://localhost:8088/manager/html
+Iniciamos el servicio de tomcat y probamos el tomcat en http://localhost:8088/manager/html
 
 .. figure:: ../images/6/img02.png
 
