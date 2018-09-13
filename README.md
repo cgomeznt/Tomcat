@@ -8,5 +8,7 @@
 * [Configurar un virtualhost](guia/virtualhost.rst)
 * [Configurar Redireccionamiento](guia/redireccionamiento.rst)
 * [Crear una APP Web con Java Servlet](guia/appWebConServlet.rst)
+* [Configurar Tomcat para que pueda ver los archivos de un directorio](guia/verarchivosdirectorio.rst)
+
 
 
