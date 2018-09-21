@@ -110,10 +110,32 @@ Copiamos las librerias y los drivers (Los tenemos que descargar).::
 	# cp -p ../../../../jstl.jar WEB-INF/lib/
 	# cp -p ../../../../standard.jar WEB-INF/lib/
 	# cp -p ../../../../ojdbc6.jar WEB-INF/lib/
+	# cp -p ../../../../db2jcc.jar WEB-INF/lib/
 
 Copiamos la clase que ya en otro momento compilamos.::
 
 	# cp -p ../../../../Hello.class WEB-INF/classes/mypackage/
+
+Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex> </context>.::
+
+	# vi /opt/apache-tomcat-8.5.34/conf/context.xml
+
+	<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+		     maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+		     username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+		     url="jdbc:mysql://localhost:3306/javatest"/>
+
+	<Resource name="jdbc/myoracle" auth="Container"
+		      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+		      url="jdbc:oracle:thin:@192.168.1.53:1521:qa12c"
+		      username="QA_RRGTGU_V138" password="QA_RRGTGU_V138" maxTotal="20" maxIdle="10"
+		      maxWaitMillis="-1"/>
+
+	<Resource name="jdbc/db2" auth="Container"
+		      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+		      url="jdbc:db2://10.124.0.176:50001/bgsample"
+		      username="bgadmin" password="zxcv4321" maxTotal="20" maxIdle="10"
+		      maxWaitMillis="-1"/>
 
 Creamos el web.xml.::
 
@@ -155,6 +177,14 @@ Creamos el web.xml.::
 	      <res-auth>Container</res-auth>
 	  </resource-ref>
 
+	  <resource-ref>
+	      <description>DB2 Datasource example</description>
+	      <res-ref-name>jdbc/db2</res-ref-name>
+	      <res-type>javax.sql.DataSource</res-type>
+	      <res-auth>Container</res-auth>
+	  </resource-ref>
+
+
 	</web-app>
 
 
@@ -186,6 +216,7 @@ Creamos el index.html.::
 	<ul>
 	<li>To a <a href="dbtestmysql.jsp">Test Datasource MySQL</a>.
 	<li>To a <a href="dbtestoracle.jsp">Test Datasource Oracle</a>.
+	<li>To a <a href="dbtestdb2.jsp">Test Datasource DB2</a>.
 	<li>To a <a href="hello.jsp">JSP page</a>.
 	<li>To a <a href="hello">servlet</a>.
 	</ul>
@@ -326,6 +357,86 @@ Para Oracle.::
 		conn = ds.getConnection();
 		stmt = conn.createStatement();
 		result = stmt.executeQuery("SELECT * FROM CDSE_USER");
+	       }
+	     }
+	     catch (SQLException e) {
+		System.out.println("Error occurred " + e);
+	      }
+	      int columns=0;
+	      try {
+		rsmd = result.getMetaData();
+		columns = rsmd.getColumnCount();
+	      }
+	      catch (SQLException e) {
+		 System.out.println("Error occurred " + e);
+	      }
+	 %>
+	 <table width="90%" border="1">
+	   <tr>
+	   <% // write out the header cells containing the column labels
+	      try {
+		 for (int i=1; i<=columns; i++) {
+		      out.write("<th>" + rsmd.getColumnLabel(i) + "</th>");
+		 }
+	   %>
+	   </tr>
+	   <% // now write out one row for each entry in the database table
+		 while (result.next()) {
+		    out.write("<tr>");
+		    for (int i=1; i<=columns; i++) {
+		      out.write("<td>" + result.getString(i) + "</td>");
+		    }
+		    out.write("</tr>");
+		 }
+	 
+		 // close the connection, resultset, and the statement
+		 result.close();
+		 stmt.close();
+		 conn.close();
+	      } // end of the try block
+	      catch (SQLException e) {
+		 System.out.println("Error " + e);
+	      }
+	      // ensure everything is closed
+	    finally {
+	     try {
+	       if (stmt != null)
+		stmt.close();
+	       }  catch (SQLException e) {}
+	       try {
+		if (conn != null)
+		 conn.close();
+		} catch (SQLException e) {}
+	    }
+	 
+	    %>
+	</table>
+	</body>
+	</html>
+
+Para DB2.::
+
+	<%@page import="java.sql.*, javax.sql.*, javax.naming.*"%>
+	<html>
+	<head>
+	<title>Using a DataSource</title>
+	</head>
+	<body>
+	<h1>Using a DataSource</h1>
+	<%
+	    DataSource ds = null;
+	    Connection conn = null;
+	    ResultSet result = null;
+	    Statement stmt = null;
+	    ResultSetMetaData rsmd = null;
+	    try{
+	      Context context = new InitialContext();
+	      Context envCtx = (Context) context.lookup("java:comp/env");
+	      ds =  (DataSource)envCtx.lookup("jdbc/db2");
+	      if (ds != null) {
+		conn = ds.getConnection();
+		stmt = conn.createStatement();
+		result = stmt.executeQuery("SELECT * FROM ALGUNATABLAAQUI");
 	       }
 	     }
 	     catch (SQLException e) {
