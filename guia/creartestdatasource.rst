@@ -27,6 +27,21 @@ Verificamos que no tengamos errores e ingresamos al URL http://IPSERVER:8080/
 Para MySQL
 +++++++++++
 
+Vamos rápido a crear una BD de prueba.::
+	
+	# mysql -uroot -pr00tme
+
+	mysql> GRANT ALL PRIVILEGES ON *.* TO javauser@localhost IDENTIFIED BY 'javadude' WITH GRANT OPTION;
+	mysql> GRANT ALL PRIVILEGES ON *.* TO javauser@* IDENTIFIED BY 'javadude' WITH GRANT OPTION;
+	mysql> create database javatest;
+	mysql> use javatest;
+	mysql> create table testdata (id int not null auto_increment primary key,foo varchar(25),bar int);
+
+	# touch insert-users.sql && echo "use javatest;" > insert-users.sql
+	# for i in {1..100} ; do echo -e "insert into testdata values(null, \"user$i\", 12345$i);" >> insert-users.sql ;done
+
+	# mysql -uroot -pr00tme < insert-users.sql
+
 Hacemos primero una configuración que es igual para todos los manejadores de BD, pero vamos a comenzar con MySQL.
 
 
