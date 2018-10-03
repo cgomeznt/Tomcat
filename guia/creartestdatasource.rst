@@ -5,92 +5,120 @@ Lo primero es leer la documentación oficial de Tomcat.
 
 https://tomcat.apache.org/tomcat-8.0-doc/jndi-datasource-examples-howto.html
 
-Introducción
-++++++++++++++
-
-La configuración de JNDI Datasource está cubierta extensamente en JNDI-Resources-HOWTO. Sin embargo, los comentarios de usuarios de tomcat han demostrado que las especificaciones para configuraciones individuales pueden ser bastante complicadas.
-
-Aquí hay algunas configuraciones de ejemplo que se han publicado en tomcat-user para bases de datos populares y algunos consejos generales para el uso de db.
-
-Debe tener en cuenta que estas notas se derivan de la configuración y / o comentarios publicados en el usuario YMMV de tomcat.
-
-Tenga en cuenta que la configuración de recursos JNDI cambió algo entre Tomcat 7.x y Tomcat 8.x ya que están utilizando diferentes versiones de la biblioteca Apache Commons DBCP. Lo más probable es que necesite modificar las configuraciones de recursos JNDI anteriores para que coincidan con la sintaxis en el ejemplo siguiente para que funcionen en Tomcat 8. Consulte la Guía de migración de Tomcat para obtener más información.
-
-Además, tenga en cuenta que la configuración de JNDI DataSource en general, y este tutorial en particular, asume que ha leído y entendido las referencias de configuración Contexto y Host, incluida la sección sobre Implementación automática de aplicaciones en la última referencia.
 
 
-DriverManager, el mecanismo del proveedor de servicio y pérdidas de memoria
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-java.sql.DriverManager es compatible con el mecanismo del proveedor de servicios. Esta característica es que todos los controladores JDBC disponibles que se anuncian al proporcionar un archivo META-INF / services / java.sql.Driver se descubren, cargan y registran automáticamente, lo que evita la necesidad de cargar el controlador de la base de datos explícitamente antes de crear un archivo. Conexión JDBC. Sin embargo, la implementación está fundamentalmente rota en todas las versiones de Java para un entorno de contenedor de servlets. El problema es que java.sql.DriverManager buscará los controladores solo una vez.
+Instalación rápida de Tomcat
+++++++++++++++++++++++++++++
 
-El módulo de escucha de prevención de fuga de memoria JRE que se incluye con Apache Tomcat resuelve esto activando el análisis de los controladores durante el arranque de Tomcat. Esto está habilitado por defecto. Significa que solo las bibliotecas visibles para el oyente como las de $ CATALINA_BASE / lib se analizarán en busca de controladores de base de datos. Si está considerando desactivar esta función, tenga en cuenta que la primera aplicación web que usa JDBC activará el escaneo, lo que ocasionará fallas cuando se vuelva a cargar esta aplicación web y para otras aplicaciones web que dependan de esta característica.
+Descargamos la versión de Tomcat que se requiera y la descomprimimos.::
 
-Por lo tanto, las aplicaciones web que tienen controladores de base de datos en su directorio WEB-INF / lib no pueden confiar en el mecanismo del proveedor de servicios y deben registrar los controladores de forma explícita.
+	# tar xvf apache-tomcat-8.5.34.tar.gz -C /opt/
 
-La lista de controladores en java.sql.DriverManager también es una fuente conocida de pérdidas de memoria. Todos los controladores registrados por una aplicación web deben cancelarse cuando se detiene la aplicación web. Tomcat intentará descubrir y eliminar automáticamente cualquier controlador JDBC cargado por el cargador de clases de la aplicación web cuando se detenga la aplicación web. Sin embargo, se espera que las aplicaciones lo hagan por sí mismas a través de ServletContextListener.
+Iniciamos el apache y no debemos ver errores en el LOG.::
 
-Database Connection Pool (DBCP 2) Configurations
-+++++++++++++++++++++++++++++++++++++++++++++++++
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh start
 
+	# tail -f /opt/apache-tomcat-8.5.34/logs/catalina.out &
 
-La implementación del grupo de conexiones de la base de datos predeterminada en Apache Tomcat se basa en las bibliotecas del proyecto Apache Commons. Se usan las siguientes bibliotecas:
-
-DBCP Comunes
-Pool de los comunes
-Estas bibliotecas se encuentran en un único JAR en $ CATALINA_HOME / lib / tomcat-dbcp.jar. Sin embargo, solo se han incluido las clases necesarias para la agrupación de conexiones, y los paquetes se han renombrado para evitar interferir con las aplicaciones.
-
-DBCP 2.0 proporciona soporte para JDBC 4.1.
+Verificamos que no tengamos errores e ingresamos al URL http://IPSERVER:8080/
 
 
-Preventing database connection pool leaks
-+++++++++++++++++++++++++++++++++++++++++++
+Para MySQL
++++++++++++
 
-Un grupo de conexión de base de datos crea y administra un conjunto de conexiones a una base de datos. Reciclar y reutilizar conexiones ya existentes en una base de datos es más eficiente que abrir una nueva conexión.
-
-Hay un problema con la agrupación de conexiones. Una aplicación web debe cerrar explícitamente ResultSet, Statement y Connection's. La falla de una aplicación web para cerrar estos recursos puede hacer que nunca vuelvan a estar disponibles para su reutilización, una "fuga" en el grupo de conexiones de la base de datos. Esto puede ocasionar que las conexiones de la base de datos de la aplicación web fallen si no hay más conexiones disponibles.
-
-Hay una solución a este problema. Apache Commons DBCP se puede configurar para rastrear y recuperar estas conexiones de bases de datos abandonadas. No solo puede recuperarlos, sino también generar un seguimiento de pila para el código que abrió estos recursos y nunca los cerró.
-
-Para configurar un DBCP DataSource para que las conexiones abandonadas de la base de datos se eliminen y se reciclen, agregue uno o ambos de los siguientes atributos a la configuración del recurso para su DBCP DataSource::
-
-	removeAbandonedOnBorrow=true
-	removeAbandonedOnMaintenance=true
+Hacemos primero una configuración que es igual para todos los manejadores de BD, pero vamos a comenzar con MySQL.
 
 
-El valor predeterminado para estos dos atributos es falso. Tenga en cuenta que removeAbandonedOnMaintenance no tiene ningún efecto a menos que el mantenimiento del grupo esté habilitado estableciendo timeBetweenEvictionRunsMillis en un valor positivo. Consulte la documentación de DBCP para obtener la documentación completa sobre estos atributos.
+Antes de continuar, no olvide copiar el archivo jar del controlador JDBC en $CATALINA_HOME/lib.::
 
-Use el atributo removeAbandonedTimeout para establecer el número de segundos que una conexión de base de datos ha estado inactiva antes de que se considere abandonada.::
-
-	removeAbandonedTimeout="60"
+	# cp mysql-connector-java-5.1.47.jar /opt/apache-tomcat-8.5.34/lib/
 
 
-El tiempo de espera predeterminado para eliminar conexiones abandonadas es de 300 segundos.
 
-El atributo logAbandoned se puede establecer en verdadero si desea que DBCP registre un seguimiento de la pila del código que abandonó los recursos de conexión de la base de datos.::
+Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex> </context>.::
 
-	logAbandoned="true"
+	# vi /opt/apache-tomcat-8.5.34/conf/context.xml
 
-Por defecto es false.
-
-
-MySQL DBCP Example
-+++++++++++++++++++
-
-* **Introduccion**
+	<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+		     maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+		     username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+		     url="jdbc:mysql://localhost:3306/javatest"/>
 
 
-Versiones de los controladores MySQL y JDBC que se ha informado que funcionan, https://dev.mysql.com/downloads/connector/j/5.1.html
+Reiniciamos el Tomcat.::
 
-* MySQL 3.23.47, MySQL 3.23.47 usan InnoDB,, MySQL 3.23.58, MySQL 4.0.1alpha
-* Connector/J 3.0.11-stable (the official JDBC Driver)
-* mm.mysql 2.0.14 (an old 3rd party JDBC Driver)
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh stop
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh start
+
+Ya con esto el Tomcat esta listo para trabajar con Datasource, ahora depende del aplicativo como lo hace.
+
+Para Oracle
++++++++++++
+
+Hacemos primero una configuración que es igual para todos los manejadores de BD, vamos con Oracle
 
 
-Antes de continuar, no olvide copiar el archivo jar del controlador JDBC en $CATALINA_HOME/lib.
+Antes de continuar, no olvide copiar el archivo jar del controlador JDBC en $CATALINA_HOME/lib.::
 
-Iniciar el laboratorio
-+++++++++++++++++++++++
+	# cp ojdbc6.jar /opt/apache-tomcat-8.5.34/lib/
+
+
+Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex> </context>.::
+
+	# vi /opt/apache-tomcat-8.5.34/conf/context.xml
+
+
+	<Resource name="jdbc/OracleDS" auth="Container"
+		      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+		      url="jdbc:oracle:thin:@192.168.1.53:1521:qa12c"
+		      username="QA_RRGTGU_V138" password="QA_RRGTGU_V138" maxTotal="20" maxIdle="10"
+		      maxWaitMillis="-1"/>
+
+
+Reiniciamos el Tomcat.::
+
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh stop
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh start
+
+Ya con esto el Tomcat esta listo para trabajar con Datasource de Oracle, ahora depende del aplicativo como lo hace.
+
+
+Para DB2
++++++++++++
+
+Hacemos primero una configuración que es igual para todos los manejadores de BD, vamos con DB2
+
+
+Antes de continuar, no olvide copiar el archivo jar del controlador JDBC en $CATALINA_HOME/lib.::
+
+	# cp db2jcc.jar /opt/apache-tomcat-8.5.34/lib/
+
+
+Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex> </context>.::
+
+	# vi /opt/apache-tomcat-8.5.34/conf/context.xml
+
+
+	<Resource name="jdbc/db2" auth="Container"
+		      type="javax.sql.DataSource" driverClassName="com.ibm.db2.jcc.DB2Driver"
+		      url="jdbc:db2://10.124.0.176:50001/bgsample"
+		      username="bgadmin" password="zxcv4321" maxTotal="20" maxIdle="10"
+		      maxWaitMillis="-1"/>
+
+
+Reiniciamos el Tomcat.::
+
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh stop
+	# /opt/apache-tomcat-8.5.34/bin/catalina.sh start
+
+
+Ya con esto el Tomcat esta listo para trabajar con Datasource de DB2, ahora depende del aplicativo como lo hace.
+
+
+
+Test del datasource con un código JSP
++++++++++++++++++++++++++++++++++++++
 
 Creamos un directorio de trabajo.::
 
@@ -105,37 +133,10 @@ Copiamos alguna imagen.::
 
 	# cp ../../../../tomcat.gif images/
 
-Copiamos las librerias y los drivers (Los tenemos que descargar).::
-
-	# cp -p ../../../../jstl.jar WEB-INF/lib/
-	# cp -p ../../../../standard.jar WEB-INF/lib/
-	# cp -p ../../../../ojdbc6.jar WEB-INF/lib/
-	# cp -p ../../../../db2jcc.jar WEB-INF/lib/
-
 Copiamos la clase que ya en otro momento compilamos.::
 
 	# cp -p ../../../../Hello.class WEB-INF/classes/mypackage/
 
-Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex> </context>.::
-
-	# vi /opt/apache-tomcat-8.5.34/conf/context.xml
-
-	<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
-		     maxTotal="100" maxIdle="30" maxWaitMillis="10000"
-		     username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
-		     url="jdbc:mysql://localhost:3306/javatest"/>
-
-	<Resource name="jdbc/myoracle" auth="Container"
-		      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
-		      url="jdbc:oracle:thin:@192.168.1.53:1521:qa12c"
-		      username="QA_RRGTGU_V138" password="QA_RRGTGU_V138" maxTotal="20" maxIdle="10"
-		      maxWaitMillis="-1"/>
-
-	<Resource name="jdbc/db2" auth="Container"
-		      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
-		      url="jdbc:db2://10.124.0.176:50001/bgsample"
-		      username="bgadmin" password="zxcv4321" maxTotal="20" maxIdle="10"
-		      maxWaitMillis="-1"/>
 
 Creamos el web.xml.::
 
@@ -163,26 +164,23 @@ Creamos el web.xml.::
 		<url-pattern>/hello</url-pattern>
 	    </servlet-mapping>
 
-	  <resource-ref>
-	      <description>DB Connection</description>
-	      <res-ref-name>jdbc/TestDB</res-ref-name>
-	      <res-type>javax.sql.DataSource</res-type>
-	      <res-auth>Container</res-auth>
-	  </resource-ref>
 
-	  <resource-ref>
-	      <description>Oracle Datasource example</description>
-	      <res-ref-name>jdbc/myoracle</res-ref-name>
-	      <res-type>javax.sql.DataSource</res-type>
-	      <res-auth>Container</res-auth>
-	  </resource-ref>
+        <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+                     maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+                     username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+                     url="jdbc:mysql://localhost:3306/javatest"/>
 
-	  <resource-ref>
-	      <description>DB2 Datasource example</description>
-	      <res-ref-name>jdbc/db2</res-ref-name>
-	      <res-type>javax.sql.DataSource</res-type>
-	      <res-auth>Container</res-auth>
-	  </resource-ref>
+        <Resource name="jdbc/OracleDS" auth="Container"
+                      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+                      url="jdbc:oracle:thin:@192.168.1.53:1521:qa12c"
+                      username="QA_RRGTGU_V138" password="QA_RRGTGU_V138" maxTotal="20" maxIdle="10"
+                      maxWaitMillis="-1"/>
+
+        <Resource name="jdbc/db2" auth="Container"
+                      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+                      url="jdbc:db2://10.124.0.176:50001/bgsample"
+                      username="bgadmin" password="zxcv4321" maxTotal="20" maxIdle="10"
+                      maxWaitMillis="-1"/>
 
 
 	</web-app>
@@ -224,7 +222,7 @@ Creamos el index.html.::
 	</body>
 	</html>
 
-Creamos una JSP solo de demo.::
+Creamos una JSP solo de demo, llamado hello.jsp, esto se puede omitir.::
 
 	<html>
 	<head>
@@ -252,7 +250,7 @@ Creamos una JSP solo de demo.::
 
 
 Creamos nuestras paginas de test en JSP para cada datasource.
-Para MySQL.::
+Para MySQL y la llamamos dbtestmysql.jsp .::
 
 	<%@page import="java.sql.*, javax.sql.*, javax.naming.*"%>
 	<html>
@@ -333,7 +331,7 @@ Para MySQL.::
 	</html>
 
 
-Para Oracle.::
+Para Oracle y le llamamos dbtestoracle.jsp::
 
 
 	<%@page import="java.sql.*, javax.sql.*, javax.naming.*"%>
@@ -352,7 +350,7 @@ Para Oracle.::
 	    try{
 	      Context context = new InitialContext();
 	      Context envCtx = (Context) context.lookup("java:comp/env");
-	      ds =  (DataSource)envCtx.lookup("jdbc/myoracle");
+	      ds =  (DataSource)envCtx.lookup("jdbc/OracleDS");
 	      if (ds != null) {
 		conn = ds.getConnection();
 		stmt = conn.createStatement();
@@ -414,7 +412,7 @@ Para Oracle.::
 	</body>
 	</html>
 
-Para DB2.::
+Para DB2, y le llamamos dbtestdb2.jsp.::
 
 	<%@page import="java.sql.*, javax.sql.*, javax.naming.*"%>
 	<html>
