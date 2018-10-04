@@ -105,9 +105,9 @@ Para DB2
 Hacemos primero una configuración que es igual para todos los manejadores de BD, vamos con DB2
 
 
-Antes de continuar, no olvide copiar el archivo jar del controlador JDBC en $CATALINA_HOME/lib.::
+Antes de continuar, **no olvide copiar los dos 2 archivo jar** del controlador JDBC en $CATALINA_HOME/lib.::
 
-	# cp db2jcc.jar /opt/apache-tomcat-8.5.34/lib/
+	# cp db2jcc.jar db2jcc4.jar /opt/apache-tomcat-8.5.34/lib/
 
 
 Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex> </context>.::
