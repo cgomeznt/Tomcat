@@ -115,11 +115,12 @@ Editamos el context.xml del Tomcat para agregar estas lineas dentro del <contex>
 	# vi /opt/apache-tomcat-8.5.34/conf/context.xml
 
 
-	<Resource name="jdbc/db2" auth="Container"
+	Resource name="jdbc/db2" auth="Container"
 		      type="javax.sql.DataSource" driverClassName="com.ibm.db2.jcc.DB2Driver"
-		      url="jdbc:db2://10.124.0.176:50001/bgsample"
-		      username="bgadmin" password="zxcv4321" maxTotal="20" maxIdle="10"
+		      url="jdbc:db2://192.168.1.21:50000/BGSAMPLE"
+		      username="db2inst1" password="password1" maxTotal="20" maxIdle="10"
 		      maxWaitMillis="-1"/>
+
 
 
 Reiniciamos el Tomcat.::
@@ -180,22 +181,27 @@ Creamos el web.xml.::
 	    </servlet-mapping>
 
 
-        <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
-                     maxTotal="100" maxIdle="30" maxWaitMillis="10000"
-                     username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
-                     url="jdbc:mysql://localhost:3306/javatest"/>
+	<resource-ref>
+	      <description>DB Connection</description>
+	      <res-ref-name>jdbc/TestDB</res-ref-name>
+	      <res-type>javax.sql.DataSource</res-type>
+	      <res-auth>Container</res-auth>
+	  </resource-ref>
 
-        <Resource name="jdbc/OracleDS" auth="Container"
-                      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
-                      url="jdbc:oracle:thin:@192.168.1.53:1521:qa12c"
-                      username="QA_RRGTGU_V138" password="QA_RRGTGU_V138" maxTotal="20" maxIdle="10"
-                      maxWaitMillis="-1"/>
+	  <resource-ref>
+	      <description>Oracle Datasource example</description>
+	      <res-ref-name>jdbc/OracleDS</res-ref-name>
+	      <res-type>javax.sql.DataSource</res-type>
+	      <res-auth>Container</res-auth>
+	  </resource-ref>
 
-        <Resource name="jdbc/db2" auth="Container"
-                      type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
-                      url="jdbc:db2://10.124.0.176:50001/bgsample"
-                      username="bgadmin" password="zxcv4321" maxTotal="20" maxIdle="10"
-                      maxWaitMillis="-1"/>
+	  <resource-ref>
+	      <description>DB2 Datasource example for DB2</description>
+	      <res-ref-name>jdbc/db2</res-ref-name>
+	      <res-type>javax.sql.DataSource</res-type>
+	      <res-auth>Container</res-auth>
+	  </resource-ref>
+
 
 
 	</web-app>
@@ -449,7 +455,7 @@ Para DB2, y le llamamos dbtestdb2.jsp.::
 	      if (ds != null) {
 		conn = ds.getConnection();
 		stmt = conn.createStatement();
-		result = stmt.executeQuery("SELECT * FROM ALGUNATABLAAQUI");
+		result = stmt.executeQuery("SELECT * FROM BGSAMPLE.USERS");
 	       }
 	     }
 	     catch (SQLException e) {
