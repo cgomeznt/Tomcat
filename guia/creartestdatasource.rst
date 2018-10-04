@@ -550,3 +550,11 @@ Seleccionamos el link del Oracle.:
 
 .. figure:: ../images/datasource/03.png
 
+
+
+
+
+Seleccionamos el link del DB2.:
+
+.. figure:: ../images/datasource/04.png
+
