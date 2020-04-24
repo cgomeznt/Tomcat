@@ -7,7 +7,7 @@ Eliminar o Renombrar la carpeta::
 
 	$TOMCAT_HOME/work/Catalina/
 	
-Crear la nueva carpeta:
+Crear la nueva carpeta::
 
 	$TOMCAT_HOME/work/Catalina/
 

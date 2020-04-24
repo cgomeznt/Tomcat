@@ -53,7 +53,7 @@ se crearán hilos adicionales hasta el máximo configurado (el valor del atribut
 Si aún se reciben más solicitudes simultáneas, se apilan dentro del socket del servidor creado por el conector, hasta el máximo configurado (el valor del atributo acceptCount). 
 Cualquier otra solicitud simultánea recibirá errores de "conexión rechazada", hasta que haya recursos disponibles para procesarlos.
 
-Configuracion en el server.xml
+Configuracion en el server.xml::
 
    <Connector address="192.168.1.20" port="443"
                 maxThreads="600" minSpareThreads="100" maxSpareThreads="350"
