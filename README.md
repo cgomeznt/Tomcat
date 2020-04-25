@@ -10,6 +10,7 @@
 * [Habilitar Garbage Collector](guia/3_Habilitar_Garbage_Collector.rst)
 * [Connector https SSL Cipher](guia/5_Conecto_SSL_Cipher.rst)
 * [Habilitar el manager-gui y host-manager](guia/manager-gui.rst)
+* [Desplegar WAR, EAR, JAR de forma manual](guia/desplegarmanual.rst)
 * [Crear una APP Web con Java Servlet](guia/appWebConServlet.rst)
 * [Configurar Tomcat para que pueda ver los archivos de un directorio](guia/verarchivosdirectorio.rst)
 * [Configurar y probar Datasource ](guia/creartestdatasource.rst)
