@@ -21,7 +21,7 @@ Editar o crear el archivo **setenv.sh** en la ruta "$CATALINA_HOME/bin" y coloca
 
 Ahora para hacer las pruebas utilizamos el cliente **cmdline-jmxclient-0.10.3.jar** de la siguiente forma::
 
-	$ /opt/jdk1.8.0_152/java -jar /usr/local/bin/cmdline-jmxclient-0.10.3.jar - localhost:8050 java.lang:type=Memory HeapMemoryUsage
+	$ $JAVA_HOME/bin/java -jar /usr/local/bin/cmdline-jmxclient-0.10.3.jar - localhost:8050 java.lang:type=Memory HeapMemoryUsage
 
 	11/12/2018 11:33:46 -0400 org.archive.jmx.Client HeapMemoryUsage: 
 	committed: 514850816

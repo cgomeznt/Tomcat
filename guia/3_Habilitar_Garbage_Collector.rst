@@ -29,7 +29,10 @@ Garbage Collector ParallelGC muy utilizado en Java de 32bit::
 	-XX:+UseParallelGC \
 	-server"
 	
+	
+El Garbage Collector tambien se puede agregar en el template del Systemctl::
 
+	Environment="CATALINA_OPTS=-Xms512M -Xmx512M -server -XX:+UseParallelGC"
 Esta seria una configuración del setenv.bat para Windows::
 
 	set "JAVA_OPTS=%JAVA_OPTS% -Xms512m -Xmx1024m -XX:MaxPermSize=256m -XX:+PrintGCTimeStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseG1GC -server"
