@@ -3,7 +3,7 @@ SystemCtl para Tomcat
 
 Descomprimir el tomcat y colocarlo en /opt
 
-Cambiamos el propietario de /opt/tomcat al usuario tomcat::
+Cambiamos el propietario de /opt/apache-tomcat-9.0.34 al usuario tomcat::
 
 	chown -R tomcat. /opt/apache-tomcat-9.0.34
 
@@ -30,7 +30,7 @@ Creamos la plantilla de servicio en  /etc/systemd/system/tomcat.service::
 
 	WorkingDirectory=/opt/tomcat
 
-	Environment="JAVA_HOME=/opt/jdk1.8.0_251"
+	Environment="JAVA_HOME=/usr/java/jdk1.8.0_251"
 	Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
 
 	Environment="CATALINA_PID=/opt/tomcat/tomcat.pid"
