@@ -31,4 +31,4 @@ Estas lineas no existen y la debemos agregar::
 		<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-That’s it Restart the Tomcat and test you will see all pages should redirect to https.
+
