@@ -55,7 +55,7 @@ Para utilizar el manager webapp instalado en pasos previos, necesitamos agregar 
 
 	# vi conf/tomcat-users.xml
 	<tomcat-users>
-	  <user name="admin" password="admin" roles="manager-gui,admin-gui" />-->
+	  <user name="admin" password="admin" roles="manager-gui,admin-gui" />
 	</tomcat-users>
 
 Se debe agregar usuarios que puedan administrar manager-gui y admin-gui (recuerda colocar el usuario y password)
