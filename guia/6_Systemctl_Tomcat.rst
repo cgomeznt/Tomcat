@@ -1,17 +1,19 @@
 SystemCtl para Tomcat
 =========================
 
-Vamos instalar tomcat en /opt y luego creamos un link simbolico hacia tomcat.::
+Descomprimir el tomcat y colocarlo en /opt
+
+Cambiamos el propietario de /opt/tomcat al usuario tomcat::
+
+	chown -R tomcat. /opt/apache-tomcat-9.0.34
+
+Creamos un link simbolico hacia tomcat.::
 
 	ln -s /opt/apache-tomcat-9.0.34 /opt/tomcat
 
 Creamos un usuario llamado tomcat sin privilegios.::
 
 	adduser tomcat
-
-Cambiamos el propietario de /opt/tomcat al usuario tomcat::
-
-	chown -R tomcat. /opt/tomcat
 
 
 Creamos la plantilla de servicio en  /etc/systemd/system/tomcat.service::
