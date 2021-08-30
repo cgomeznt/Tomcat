@@ -6,6 +6,7 @@
 * [Instalar Tomcat 7 CentOS desde tomcat.apache.org](guia/instalar_tomcat7.rst)
 * [Limpiar el cache y temporales](guia/1_Cache_tomcat.rst)
 * [Configurar SSL](guia/ssl.rst)
+* [Redirecting HTTP to HTTPS in Tomcat](guia/redirecthttptohttps.rst)
 * [Habilitar JMX remote](guia/jmxremote.rst)
 * [Habilitar Garbage Collector](guia/3_Habilitar_Garbage_Collector.rst)
 * [Connector https SSL Cipher](guia/5_Conecto_SSL_Cipher.rst)
