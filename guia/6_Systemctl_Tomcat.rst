@@ -15,6 +15,7 @@ Creamos un usuario llamado tomcat sin privilegios.::
 
 	adduser tomcat
 
+Antes de continuar, recuerda la variables de entorno como JAVA_HOME, que tengas el usuario creado, que el usuario sea propietario de la carpeta, que los script tengan permisos de ejecución.
 
 Creamos la plantilla de servicio en  /etc/systemd/system/tomcat.service::
 
