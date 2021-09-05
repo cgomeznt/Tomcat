@@ -23,12 +23,19 @@ Configuracion en el server.xml::
                 acceptCount="2000" debug="0"
                 scheme="https" secure="true" clientAuth="false"
                 sslProtocols="TLSv1,TLSv1.1,TLSv1.2"
-                ciphers="TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
-                TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
-                TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256,
-                TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA,
-                SSL_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
-                SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA"
+                ciphers="TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+                        TLS_RSA_WITH_AES_128_CBC_SHA,
+                        TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+                        TLS_RSA_WITH_AES_128_CBC_SHA256,
+                        TLS_RSA_WITH_AES_128_GCM_SHA256,
+                        TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+                        TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                        TLS_RSA_WITH_AES_256_CBC_SHA,
+                        TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+                        TLS_RSA_WITH_AES_256_CBC_SHA256,
+                        TLS_RSA_WITH_AES_256_GCM_SHA384,
+                        TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+                        TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
                 keystoreFile="/opt/tomcat/keystoreFile/keystore2020.jks"  keystorePass="changeme"
                 maxKeepAliveRequests="100" socketBuffer="9000"
                 maxSpareProcessors="200" maxProcessors="400"
