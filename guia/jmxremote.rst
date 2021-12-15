@@ -13,7 +13,8 @@ Editar o crear el archivo **setenv.sh** en la ruta "$CATALINA_HOME/bin" y coloca
 	-Dcom.sun.management.jmxremote.port=8050 \
 	-Dcom.sun.management.jmxremote.rmi.port=8050 \
 	-Dcom.sun.management.jmxremote.ssl=false \
-	-Dcom.sun.management.jmxremote.authenticate=false"
+	-Dcom.sun.management.jmxremote.authenticate=false \
+	-Djava.rmi.server.hostname=192.168.1.20"
 
 	export CATALINA_OPTS="$CATALINA_OPTS -Xms512m"
 	export CATALINA_OPTS="$CATALINA_OPTS -Xmx512m"
