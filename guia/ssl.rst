@@ -157,6 +157,23 @@ Configuracion en el server.xml::
         -->
     </Connector>
 
+La siguiente cofiguración aplica si en Tomcat requiere del tag SSLHostConfig::
+
+
+	<Connector address="10.134.3.35" port="443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+		maxThreads="150" SSLEnabled="true" >
+		<UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+		<SSLHostConfig
+		clientAuth="false"
+		protocols="TLSv1.2"
+		ciphers="TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA" >
+		<Certificate certificateKeystoreFile="conf/certs/keystore.jks"
+		certificateKeystorePassword="Venezuela21"
+		certificateKeystoreType="JKS"
+		type="RSA" />
+		</SSLHostConfig>
+	</Connector>
+
 
 Consultamos el SSL de nuestro Tomcat::
 
