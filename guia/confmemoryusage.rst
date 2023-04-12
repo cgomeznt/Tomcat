@@ -25,3 +25,16 @@ El Heap es el espacio de memoria que contiene todos los objetos creados por su a
 **-XX**: MaxPermSize: este es el tamaño máximo de generación permanente.
 
 El tamaño de gem permanente es el espacio donde se almacena su base de código dentro de la memoria, cuanto más grande sea su base de código, más espacio de generación permanente se requiere, normalmente la aplicación no requeriría más de un máximo de 1 GB de espacio de generación permanente. En caso de espacio de generación de permiso bajo, se lanza la excepción "OutOfMemoryError: PermGen".
+
+
+Cuando asignas la memoria a la JVM, posiblemente no se vea el tamaño total en el SO, ejemplo:
+
+Asignamos 4Gb a la JVM y ejecutamos el siguiente comando en y vemos como el RSS dice que solo tiene 441214Kb utilizado::
+
+  ps -ylC java
+  S   UID     PID    PPID  C PRI  NI   RSS    SZ WCHAN  TTY          TIME CMD
+  S 30010  999064       1  0  80   0 441244 2034483 futex_ ?     00:02:19 java
+
+Pero al configurar el JMX remote y conectar un jconsole podemos observar que si indica que tiene los 4Gb.
+
+.. figure:: ../images/memory-01.png
