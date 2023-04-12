@@ -35,6 +35,14 @@ Asignamos 4Gb a la JVM y ejecutamos el siguiente comando en y vemos como el RSS 
   S   UID     PID    PPID  C PRI  NI   RSS    SZ WCHAN  TTY          TIME CMD
   S 30010  999064       1  0  80   0 441244 2034483 futex_ ?     00:02:19 java
 
-Pero al configurar el JMX remote y conectar un jconsole podemos observar que si indica que tiene los 4Gb.
+Pero al configurar el JMX remote y conectar un jconsole y con el cliente cmdline-jmxclient podemos observar que si indica que tiene los 4Gb::
+
+  # java -jar cmdline-jmxclient-0.10.3.jar - 10.134.3.35:8050 java.lang:type=Memory HeapMemoryUsage
+  04/12/2023 09:14:50 -0400 org.archive.jmx.Client HeapMemoryUsage:
+  committed: 4294967296
+  init: 4294967296
+  max: 4294967296
+  used: 318476288
+
 
 .. figure:: ../images/memory-01.png
