@@ -17,18 +17,21 @@ NotaPara la autenticación Kerberos, el servidor Tomcat debe ejecutarse como un 
 
 luego ingrese el comando::
 
- service.bat eliminar nombre-servicio
+ service.bat remove service-name
 
 Si no lo puedes borrar
 ---------------------
 
 debes hacerlo con el comando de Microsoft::
 
- sc eliminar servidor de noticias
+ sc delete newserv
 
-3.- En el mismo directorio, ingresa el siguiente comando:
+3.- En el mismo directorio
+---------------------------+
 
-service.bat instalar tomcatv
+ingresa el siguiente comando::
+
+ service.bat install tomcatv
 
 donde v es la versión de Tomcat (tomcat5, tomcat6 o tomcat7)
 
