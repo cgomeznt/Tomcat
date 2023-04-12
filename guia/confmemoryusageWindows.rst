@@ -8,8 +8,10 @@ Si cambió el nombre del servicio de Windows, debe usar el método 2.
 Método 1:
 +++++++++++
 
-** Abra el Explorador de Windows.
-** Vaya al directorio <CATALINA_HOME>/bin .
+1** Abra el Explorador de Windows.
+
+2** Vaya al directorio <CATALINA_HOME>/bin .
+
 ** Busque y ejecute el archivo tomcat#w.exe (donde # es el número de versión de Tomcat). Ejecute esto como administrador haciendo clic con el botón derecho en el archivo .exe y seleccionando Ejecutar como administrador .
 ** El comando abrirá una ventana del programa.
 ** Si esto produce un error que dice "El servicio especificado no existe en el servidor", vaya al Método 2 .
