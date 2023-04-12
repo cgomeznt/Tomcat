@@ -12,14 +12,19 @@ NotaPara la autenticación Kerberos, el servidor Tomcat debe ejecutarse como un 
 
 * Ingrese net stop service-name donde service-name es el nombre de su servicio Tomcat actual.
 
-2.- Abra una ventana de comando, vaya al directorio bin de Tomcat, luego ingrese el comando:
+2.- Abra una ventana de comando, vaya al directorio bin de Tomcat
 ------------------------------------------------------------------
+
+luego ingrese el comando::
 
  service.bat eliminar nombre-servicio
 
-Si no lo puedes borrar, debes hacerlo con el comando de Microsoft::
+Si no lo puedes borrar
+---------------------
 
-sc eliminar servidor de noticias
+debes hacerlo con el comando de Microsoft::
+
+ sc eliminar servidor de noticias
 
 3.- En el mismo directorio, ingresa el siguiente comando:
 
@@ -27,26 +32,37 @@ service.bat instalar tomcatv
 
 donde v es la versión de Tomcat (tomcat5, tomcat6 o tomcat7)
 
-4.- En el mismo directorio, ingresa el siguiente comando:
+4.- En el mismo directorio
+--------------------------
 
-update_service_centrify.bat tomcatv
+ingresa el siguiente comando::
 
-donde v es la versión de Tomcat.
+ update_service_centrify.bat tomcatv
+
+donde **v** es la versión de Tomcat.
 
 5.- Abre Inicio > Herramientas administrativas > Servicios y selecciona el servicio de Tomcat que acabas de instalar.
+--------------------------------------------------
 
 6.- Haz clic derecho y selecciona Propiedades.
+---------------------------------------------
 
 7.- Haga clic en la pestaña Iniciar sesión y seleccione Cuenta del sistema local o Esta cuenta para especificar una cuenta de usuario y una contraseña para el uso del servicio.
+------------------------------------
 Haga su selección de acuerdo con los siguientes criterios:
 
-●Para la autenticación Kerberos: el servicio de Windows debe ejecutarse como una cuenta del sistema local.
-●Para aplicaciones que utilizan autenticación FORM, BASIC o NTLM: el servicio de Windows puede ejecutarse como un sistema local o puede especificar una cuenta de usuario.
-●Para aplicaciones que utilizan los servicios de federación de Active Directory: el servicio de Windows puede ejecutarse como cualquier cuenta de usuario.
+* Para la autenticación Kerberos: el servicio de Windows debe ejecutarse como una cuenta del sistema local.
+
+* Para aplicaciones que utilizan autenticación FORM, BASIC o NTLM: el servicio de Windows puede ejecutarse como un sistema local o puede especificar una cuenta de usuario.
+
+* Para aplicaciones que utilizan los servicios de federación de Active Directory: el servicio de Windows puede ejecutarse como cualquier cuenta de usuario.
 
 8.- Haz clic en la pestaña General para seleccionar el tipo de Inicio.
+-----------------------------------------
 
 Tenga en cuenta que si selecciona Manual, debe iniciar el servicio Tomcat explícitamente cada vez que inicie el servidor.
 
 9.- Inicie el servicio haciendo clic en Inicio, luego en Aceptar.
+----------------------------------
+
 Como alternativa, puede iniciar el servicio abriendo una ventana de comandos y luego ingresando net start service-name donde service-name es el nombre de su nuevo servicio Tomcat.
