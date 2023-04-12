@@ -1,6 +1,9 @@
 Habilitar el manager-gui y admin-gui
 =========================
 
+Manager-App
+---------------
+
 Configuramos el Tomcat Web Management Interface Para utilizar el manager webapp instalado en pasos previos, necesitamos agregar un login al Tomcat server. para eso editamos el archivo tomcat-users.xml.::
 
 	<?xml version="1.0" encoding="UTF-8"?>
@@ -27,6 +30,9 @@ y comentamos las lineas, queda algo como esto::
 			 allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />-->
 	  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 	</Context>
+
+Host Manager 
+--------------
 
 El host-manager esta accesible unicamente por localhost, para permitir el acceso remoto, editamos el archivo y comentamos la parte de la configuracion que especifica que solo sea de local host
 Editamos el archivo::
