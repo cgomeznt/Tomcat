@@ -14,10 +14,10 @@ Configuramos el Tomcat Web Management Interface Para utilizar el manager webapp 
 	</tomcat-users>
 
 
-Manager-gui esta accesible unicamente por localhost, para permitir el acceso remoto, editamos el archivo y comentamos la parte de la configuracion que especifica que solo sea de local host
+Manager-gui esta accesible unicamente por localhost, para permitir el acceso remoto, editamos el archivo en donde esta desplegad el Manager-gui y comentamos la parte de la configuracion que especifica que solo sea de localhost
 Editamos el archivo::
 
-	$CATALINA_HOME/webapps/manager/META-INF/context.xml::
+	$CATALINA_HOME/webapps/manager/META-INF/context.xml
 
 y comentamos las lineas, queda algo como esto::
 
