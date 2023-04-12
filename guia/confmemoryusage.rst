@@ -1,7 +1,7 @@
 Configurar Memory Usage
 ===================================
 
-Crear un nuevo script con el nombre de  **setenv.sh** en la carpeta $TOMCAT_HOME/bin con el siguiente contenido::
+Crear un nuevo script con el nombre de  **setenv.sh** en linux y **setenv.bat** en Windows, dentro de la carpeta $TOMCAT_HOME/bin con el siguiente contenido::
 
 
   export CATALINA_OPTS="$CATALINA_OPTS -Xms4g"
