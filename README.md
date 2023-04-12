@@ -6,6 +6,7 @@
 * [Instalar Tomcat 7 CentOS desde tomcat.apache.org](guia/instalar_tomcat7.rst)
 * [Limpiar el cache y temporales](guia/1_Cache_tomcat.rst)
 * [Desplegar WAR, EAR, JAR de forma manual](guia/desplegarmanual.rst)
+* [Configurar Memory Usage](guia/confmemoryusage.rst)
 * [Configurar SSL](guia/ssl.rst)
 * [Connector https SSL Cipher](guia/5_Conecto_SSL_Cipher.rst)
 * [Redirecting HTTP to HTTPS in Tomcat](guia/redirecthttptohttps.rst)
