@@ -6,14 +6,16 @@ En esta sección, instalará y actualizará el servicio de Windows de Tomcat par
 NotaPara la autenticación Kerberos, el servidor Tomcat debe ejecutarse como un servicio de Windows y el servicio debe configurarse para ejecutarse como una cuenta del sistema local.
 
 1. Detener el servicio: Hay dos formas de detener un servicio:
+------------------------------------------------------------------
 
-  * Abra Inicio > Herramientas administrativas > Servicios. Seleccione el servicio Tomcat, haga clic con el botón derecho y luego haga clic en Detener.
+* Abra Inicio > Herramientas administrativas > Servicios. Seleccione el servicio Tomcat, haga clic con el botón derecho y luego haga clic en Detener.
 
-  * Ingrese net stop service-name donde service-name es el nombre de su servicio Tomcat actual.
+* Ingrese net stop service-name donde service-name es el nombre de su servicio Tomcat actual.
 
-2.- Abra una ventana de comando, vaya al directorio bin de Tomcat, luego ingrese el comando::
+2.- Abra una ventana de comando, vaya al directorio bin de Tomcat, luego ingrese el comando:
+------------------------------------------------------------------
 
-service.bat eliminar nombre-servicio
+ service.bat eliminar nombre-servicio
 
 Si no lo puedes borrar, debes hacerlo con el comando de Microsoft::
 
