@@ -240,6 +240,27 @@ Consultamos el SSL de nuestro Tomcat::
 			Timeout   : 300 (sec)
 			Verify return code: 18 (self signed certificate)
 	---
+Esta configuracion me funciono con Tomcat 10
+================================================
+
+Los certificados simplemente los cambie a **pem** y colocamos esta configuracion::
+
+	<Connector port="443"
+	           protocol="org.apache.coyote.http11.Http11NioProtocol"
+	           maxThreads="100"
+	           compression="on"
+	           scheme="https"
+	           SSLEnabled="true"
+	           secure="true"
+	           defaultSSLHostConfigName="test.test">
+	    <SSLHostConfig hostName="test.test"
+	                   protocols="TLSv1.2">
+	        <Certificate certificateFile="/certs/crtsencamer.pem"
+	                     certificateKeyFile="/certs/keysencamer.pem"
+	                     certificateChainFile="/certs/ca.pem" />
+	    </SSLHostConfig>
+	</Connector>
+
 
 
 
