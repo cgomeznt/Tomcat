@@ -13,6 +13,7 @@
 * [Script Systemctl para Tomcat](guia/6_Systemctl_Tomcat.rst)
 * [Run Tomcat como un servicio en Windows](guia/runservicewindows.rst)
 * [Run Tomcat non-root](guia/non-root.rst)
+* [Virtual Host en Tomcat ](guia/Virtual_Host_Tomcat7.rst)
 * [Configurar Memory Usage Linux](guia/confmemoryusage.rst)
 * [Configurar Memory Usage Windows](guia/confmemoryusageWindows.rst)
 * [Habilitar JMX remote](guia/jmxremote.rst)
